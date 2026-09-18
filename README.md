@@ -9,7 +9,13 @@
 
 ## 番茄小说
 
-候选版 2026-09-18.1：2条广告域名拒绝、6条广告URL匹配。通过15个模拟URL检查，未完成iPhone实机验收，不能保证最新版全部广告消失。启用前停用原来两份番茄模块，避免叠加。参考 zqzess/rule_for_quantumultX 和 deezertidal/shadowrocket-rules 的公开广告接口线索重新编写；不封锁整个字节域名或历史IP。
+候选版 2026-09-18.2。上一版已被用户报告未能屏蔽广告，本版尚未经过iPhone实机验收。综合 zqzess 与 honue 的已知广告路径，并按用户要求拒绝 fqnovelvod.com 视频CDN和 novelapp.ixigua.com 视频请求。番茄域名下 audio/tts/video 路径为候选规则，缺少当前iPhone请求日志，不能保证听书全覆盖。已缓存媒体和离线朗读不受网络规则控制。
+
+没有加入全局 ttplayer 拦截、历史IP及整个 bytedance.com 封锁。共享广告接口仍可能影响其他App，snssdk 的 toutiao 视频路径也会被拒绝。无需会员脚本，不提供会员解锁。
+
+启用前停用旧番茄模块；更新模块后重新应用配置，测试文字阅读、章末/底部广告及听书视频。若听书仍可加载，请提供对应时段Shadowrocket请求记录（隐藏订阅与凭据）以确认真实地址，避免盲目扩大封锁。
+
+来源：https://github.com/zqzess/rule_for_quantumultX/blob/master/Surge/Module/FanQieNovel.sgmodule 、https://github.com/honue/rules/blob/master/Loon/plugin/FanQieNovel.plugin 。
 
 ## TikTok US
 
@@ -23,4 +29,4 @@ HTTPS解密本身不把DIRECT改为PROXY或改变内网VPN策略，但名单内�
 
 使用自己生成并在iPhone中信任的CA证书；不要上传证书或私钥。导入后在方便中断连接时重新应用配置，确认有效名单，再测试阅读、翻章、底部广告及原有服务。
 
-若出现问题，停用新模块并恢复原模块；不要同时启用多个TikTok地区模块。旧sing-box位置仅作为迁移入口，后续维护以本仓库为准。
+若出现问题，停用新模块并恢复原模块；不要同时启用多个TikTok地区模块。旧sing-box地址仍可能是旧版，请使用本仓库上方更新地址。
