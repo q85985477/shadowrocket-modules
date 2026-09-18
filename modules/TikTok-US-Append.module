@@ -1,0 +1,20 @@
+#!url=https://raw.githubusercontent.com/q85985477/shadowrocket-modules/main/modules/TikTok-US-Append.module
+#!name=TikTok US（追加解密名单）
+#!desc=保留旧美国区改写，仅修复解密名单覆盖。未验证新版解锁；美国内容依赖实际节点。
+#!openUrl=https://github.com/Semporia/TikTok-Unlock
+#!author=Semporia
+#!homepage=https://github.com/q85985477/shadowrocket-modules
+#!icon= https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Social_Media/TikTok.png
+
+# 原模块作者：Semporia；上游：https://github.com/Semporia/TikTok-Unlock
+# 本地维护只修复APPEND并调整更新地址；保留原有4条改写。
+# 上游现推荐最新版使用支持解锁的节点，无需旧式MitM改写。
+
+[URL Rewrite]
+(?<=_region=)CN(?=&) US 307
+(?<=&mcc_mnc=)4 2 307
+^(https?:\/\/(tnc|dm)[\w-]+\.\w+\.com\/.+)(\?)(.+) $1$3 302
+(^https?:\/\/*\.\w{4}okv.com\/.+&.+)(\d{2}\.3\.\d)(.+) $118.0$3 302
+
+[MITM]
+hostname = %APPEND% *.tiktokv.com,*.byteoversea.com,*.tik-tokapi.com
