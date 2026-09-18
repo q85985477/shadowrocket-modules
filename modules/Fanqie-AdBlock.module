@@ -1,0 +1,29 @@
+#!name=番茄小说定向去广告（待实机验收）
+#!desc=候选版 2026-09-18.1；针对已知广告请求，不保证最新版全屏蔽。共享广告域名也会影响其他App；启用前停用旧番茄模块。需要HTTPS解密及可信证书。
+#!author=q85985477
+#!url=https://raw.githubusercontent.com/q85985477/shadowrocket-modules/main/modules/Fanqie-AdBlock.module
+#!homepage=https://github.com/q85985477/shadowrocket-modules/blob/main/modules/Fanqie-AdBlock.module
+
+# 设计范围：只拒绝明确的广告域名或URL，不配置DIRECT/PROXY、DNS或TUN路由。
+# 依据：zqzess/FanQieNovel.sgmodule、deezertidal/fanqie.module 的公开广告接口线索。
+# 本文件重新编写匹配条件；未复制其整域名封锁、历史IP封锁和小说视频全量封锁。
+# 本模块不是App进程隔离：共用以下广告接口的其他App也会命中。
+# 地区模块等其他模块若使用 hostname = 而不是 hostname = %APPEND%，可能覆盖此名单。
+
+[Rule]
+DOMAIN,p6-ad-sign.byteimg.com,REJECT
+DOMAIN,p9-ad-sign.byteimg.com,REJECT
+
+[URL Rewrite]
+^https?:\/\/[A-Za-z0-9.-]+\.pangolin-sdk-toutiao\.com\/api\/ad\/union\/sdk\/(?:get_ads|stats|settings)(?:\/|\?|$) - reject
+^https?:\/\/[A-Za-z0-9.-]+\.(?:pglstatp-toutiao|pstatp)\.com\/(?:obj|img)\/(?:ad-app-package|ad)\/ - reject
+^https?:\/\/[A-Za-z0-9.-]+\.(?:pglstatp-toutiao|pstatp)\.com\/(?:obj|img)\/web\.business\.image\/ - reject
+^https?:\/\/[A-Za-z0-9.-]+\.(?:pglstatp-toutiao|pstatp)\.com\/obj\/ad-pattern\/renderer(?:\/|\?|$) - reject
+^https?:\/\/[A-Za-z0-9.-]+\.(?:pglstatp-toutiao|pstatp)\.com\/obj\/ad-site-adstyle-public\/ - reject
+^https?:\/\/[A-Za-z0-9.-]+\.byteimg\.com\/(?:ad-app-package|web\.business\.image)\/ - reject
+
+[MITM]
+hostname = %APPEND% *.pangolin-sdk-toutiao.com,*.pglstatp-toutiao.com,*.pstatp.com,*.byteimg.com
+
+# HTTPS解密按主机名生效：上面共享CDN域名的普通请求也会被解密，但不会被本模块全部拒绝。
+# 不携带证书/密钥；不修改全局解密开关；不加入内网、远程桌面、支付或AI服务域名。
